@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<people>
+    <person id="12" name="Ivan" street="street" number="21" city_id="19">Person12</person>
+    <person id="16" name="Влад Кубицкий" street="Держинская" number="25" city_id="2">Person16</person>
+    <person id="17" name="Антон" street="Ленина" number="2" city_id="21">Person17</person>
+    <person id="18" name="Vanya" street="Oktyabrskaya" number="10" city_id="14">Person18</person>
+    <person id="22" name="Ilya" street="gde-to" number="666" city_id="21">Person22</person>
+    <person id="0" name="qwerty" street="qwerty" number="1" city_id="1"/>
+</people>
