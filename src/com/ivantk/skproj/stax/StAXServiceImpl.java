@@ -153,8 +153,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
                                 break;
                             case "name":
                                 xmlEvent = reader.nextEvent();
-                                if(productName.equals(String.valueOf(xmlEvent.asCharacters().getData())))
-                                    product.setName(String.valueOf(xmlEvent.asCharacters().getData()));
+                                product.setName(String.valueOf(xmlEvent.asCharacters().getData()));
                                 break;
                             case "count":
                                 xmlEvent = reader.nextEvent();
@@ -168,11 +167,9 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
                 // то добавляем считанного из файла студента в список
                 if (xmlEvent.isEndElement()) {
                     EndElement endElement = xmlEvent.asEndElement();
-                    if (endElement.getName().getLocalPart().equals("product") && storeName.equals(currentStore)) {
-                        if(product != null && product.getName() != null)
-                            return product;
-                        else
-                            return null;
+                    if (endElement.getName().getLocalPart().equals("product") && storeName.equals(currentStore)
+                            && product != null && productName.equals(product.getName())) {
+                        return product;
                     }
                 }
             }
@@ -230,7 +227,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
         try {
             StAXServiceImpl stAXService = new StAXServiceImpl();
             Product product = null;
-            product = stAXService.findProduct("Product11", MainController.nameStore);
+            product = stAXService.findProduct("Product21", MainController.nameStore);
            System.out.println(product);
         } catch (RemoteException e) {
             e.printStackTrace();
