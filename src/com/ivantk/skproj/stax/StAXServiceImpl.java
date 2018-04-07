@@ -37,26 +37,11 @@ import java.util.List;
 
 public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
 
-    private XMLInputFactory xmlInputFactory;
-    private XMLEventFactory xmlEventFactory;
     private DocumentBuilder documentBuilder;
-    private XMLOutputFactory xmlOutputFactory;
-    private XMLEventWriter xmlEventWriter;
-    private XMLEventReader xmlEventReader;
 
     public StAXServiceImpl() throws RemoteException {
         try {
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-//            Schema schema = factory.newSchema(schemaLocation);
-            xmlInputFactory = XMLInputFactory.newFactory();
-            xmlEventFactory = XMLEventFactory.newFactory();
-
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-//            documentBuilderFactory.setSchema(schema);
-//            Validator validator = schema.newValidator();
-//            Source source = new StreamSource(productFile);
-//            validator.validate(source);
-
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
@@ -71,7 +56,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
             NodeList nodes = document.getElementsByTagName("store");
             for (int i =0; i < nodes.getLength(); i++){
                 if(storeName.equals(nodes.item(i).getAttributes().getNamedItem("name_store").getNodeValue())){
-                    root = (Element) document.getElementsByTagName("store").item(0);
+                    root = (Element) document.getElementsByTagName("store").item(i);
                 }
             }
             Element xmlBook = document.createElement("product");

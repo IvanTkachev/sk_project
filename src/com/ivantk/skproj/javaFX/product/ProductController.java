@@ -31,7 +31,7 @@ public class ProductController {
             int id = 0;
             for(int i = 0; i < MainController.products.size(); i++){
                 if(MainController.products.get(i).getId() > id)
-                    id = MainController.products.get(i).getCount();
+                    id = MainController.products.get(i).getId();
             }
             Product product = new Product(id, name.getText(), Integer.parseInt(count.getText()));
             try {
