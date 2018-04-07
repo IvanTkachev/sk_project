@@ -125,6 +125,61 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
 
     @Override
     public Product findProduct(String productName, String storeName) throws RemoteException {
+        Product product = null;
+        String currentStore = null;
+        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        try {
+            // инициализируем reader и скармливаем ему xml файл
+            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(productsFile));
+            // проходим по всем элементам xml файла
+            while (reader.hasNext()) {
+                // получаем событие (элемент) и разбираем его по атрибутам
+                XMLEvent xmlEvent = reader.nextEvent();
+                if (xmlEvent.isStartElement()) {
+                    StartElement startElement = xmlEvent.asStartElement();
+                    Attribute nameStore = startElement.getAttributeByName(new QName("name_store"));
+                    if(nameStore != null){
+                        currentStore = nameStore.getValue();
+                    }
+                    if(storeName.equals(currentStore)){
+                        switch (startElement.getName().getLocalPart()) {
+                            case "product":
+                                product = new Product();
+                                // Получаем атрибут id для каждого элемента Student
+                                Attribute idProduct = startElement.getAttributeByName(new QName("id_product"));
+                                if (idProduct != null) {
+                                    product.setId(Integer.parseInt(idProduct.getValue()));
+                                }
+                                break;
+                            case "name":
+                                xmlEvent = reader.nextEvent();
+                                if(productName.equals(String.valueOf(xmlEvent.asCharacters().getData())))
+                                    product.setName(String.valueOf(xmlEvent.asCharacters().getData()));
+                                break;
+                            case "count":
+                                xmlEvent = reader.nextEvent();
+                                product.setCount(Integer.parseInt(xmlEvent.asCharacters().getData()));
+                                break;
+                        }
+                    }
+
+                }
+                // если цикл дошел до закрывающего элемента Student,
+                // то добавляем считанного из файла студента в список
+                if (xmlEvent.isEndElement()) {
+                    EndElement endElement = xmlEvent.asEndElement();
+                    if (endElement.getName().getLocalPart().equals("product") && storeName.equals(currentStore)) {
+                        if(product != null && product.getName() != null)
+                            return product;
+                        else
+                            return null;
+                    }
+                }
+            }
+
+        } catch (FileNotFoundException | XMLStreamException exc) {
+            exc.printStackTrace();
+        }
         return null;
     }
 
@@ -174,11 +229,9 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
     public static void main(String[] args) {
         try {
             StAXServiceImpl stAXService = new StAXServiceImpl();
-            List<Product> stores = new ArrayList<>();
-            stores = stAXService.getAllProducts(MainController.nameStore);
-            for (Product store : stores) {
-                System.out.println(store.getCount());
-            }
+            Product product = null;
+            product = stAXService.findProduct("Product11", MainController.nameStore);
+           System.out.println(product);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
