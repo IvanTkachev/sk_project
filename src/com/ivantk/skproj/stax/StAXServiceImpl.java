@@ -138,6 +138,32 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
 
     @Override
     public void deleteProduct(String productName, String storeName) throws RemoteException {
+        try {
+            Document document = documentBuilder.parse(productsFile);
+            Element root = null;
+            NodeList nodes = document.getElementsByTagName("store");
+            for (int i =0; i < nodes.getLength(); i++){
+                if(storeName.equals(nodes.item(i).getAttributes().getNamedItem("name_store").getNodeValue())){
+                    root = (Element) document.getElementsByTagName("store").item(i);
+                }
+            }
+            NodeList rootNodes = root.getElementsByTagName("product");
+            Element rootProduct = null;
+            for (int i =0; i < rootNodes.getLength(); i++){
+                NodeList childes = rootNodes.item(i).getChildNodes();
+                for (int j =0; j < childes.getLength(); j++){
+                    if(childes.item(j).getFirstChild() != null
+                    && productName.equals(childes.item(j).getFirstChild().getNodeValue())){
+                        root.removeChild(rootNodes.item(i));
+                    }
+                }
+            }
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(new DOMSource(document), new StreamResult(productsFile));
+
+        } catch (IOException | SAXException | TransformerException ex) {
+            ex.printStackTrace();
+        }
 
     }
 
@@ -244,7 +270,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
     public static void main(String[] args) {
         try {
             StAXServiceImpl stAXService = new StAXServiceImpl();
-           stAXService.addProduct(new Product(4, "Product4", 123), MainController.nameStore);
+           stAXService.deleteProduct("Product12", MainController.nameStore);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

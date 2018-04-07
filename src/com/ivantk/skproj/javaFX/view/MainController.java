@@ -39,7 +39,6 @@ public class MainController {
     private XMLService xmlService;
 
     public static String nameStore = "Store1";
-//    public static Product productForUpdate;
 
 
     //PRODUCT ACTIONS
@@ -67,13 +66,6 @@ public class MainController {
 
 
     public void showDeleteDialog(ActionEvent actionEvent) {
-//        productForUpdate = productTableView.getSelectionModel().getSelectedItem();
-//        if(productForUpdate == null){
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText("There is no product. Try again");
-//            alert.show();
-//            return;
-//        }
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainFX.class.getResource("deleteDialog.fxml"));

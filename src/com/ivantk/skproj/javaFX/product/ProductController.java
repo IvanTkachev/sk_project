@@ -33,6 +33,7 @@ public class ProductController {
                 if(MainController.products.get(i).getId() > id)
                     id = MainController.products.get(i).getId();
             }
+            id++;
             Product product = new Product(id, name.getText(), Integer.parseInt(count.getText()));
             try {
                 if (xmlService.findProduct(product.getName(), MainController.nameStore) == null) {
@@ -77,11 +78,6 @@ public class ProductController {
         }catch (Exception e){
             e.printStackTrace();
         }
-//        if (updateName != null) {
-//                updateName.setText(MainController.productForUpdate.getName());
-//                updateCount.setText(String.valueOf(MainController.productForUpdate.getCount()));
-//
-//        }
 
     }
 

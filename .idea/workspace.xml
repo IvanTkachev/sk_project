@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/out/production/skproj/com/ivantk/skproj/javaFX/product/ProductController.class" afterPath="$PROJECT_DIR$/out/production/skproj/com/ivantk/skproj/javaFX/product/ProductController.class" />
+      <change beforePath="$PROJECT_DIR$/out/production/skproj/com/ivantk/skproj/javaFX/view/MainController.class" afterPath="$PROJECT_DIR$/out/production/skproj/com/ivantk/skproj/javaFX/view/MainController.class" />
       <change beforePath="$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/product/ProductController.java" afterPath="$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/product/ProductController.java" />
+      <change beforePath="$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java" afterPath="$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java" />
       <change beforePath="$PROJECT_DIR$/src/com/ivantk/skproj/stax/StAXServiceImpl.java" afterPath="$PROJECT_DIR$/src/com/ivantk/skproj/stax/StAXServiceImpl.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -101,11 +104,21 @@
       <file leaf-file-name="StAXServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/stax/StAXServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="59" column="17" lean-forward="true" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+            <state relative-caret-position="2366">
+              <caret line="161" column="47" lean-forward="false" selection-start-line="161" selection-start-column="47" selection-end-line="161" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="my.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/resources/my.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="693">
+              <caret line="33" column="18" lean-forward="false" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -125,8 +138,8 @@
       <file leaf-file-name="MainController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="52" column="41" lean-forward="false" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
+            <state relative-caret-position="-42">
+              <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -134,24 +147,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProductController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ProductController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/product/ProductController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="41" column="23" lean-forward="false" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+            <state relative-caret-position="304">
+              <caret line="35" column="17" lean-forward="false" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/resources/my.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -262,10 +265,10 @@
         <option value="$PROJECT_DIR$/src/com/ivantk/skproj/stax/XMLService.java" />
         <option value="$PROJECT_DIR$/src/com/ivantk/skproj/entities/Store.java" />
         <option value="$PROJECT_DIR$/src/com/ivantk/skproj/entities/Product.java" />
-        <option value="$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java" />
-        <option value="$PROJECT_DIR$/src/resources/my.xml" />
         <option value="$PROJECT_DIR$/src/com/ivantk/skproj/stax/StAXServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java" />
         <option value="$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/product/ProductController.java" />
+        <option value="$PROJECT_DIR$/src/resources/my.xml" />
       </list>
     </option>
   </component>
@@ -638,12 +641,12 @@
       <workItem from="1519821557956" duration="89743000" />
       <workItem from="1521403743229" duration="8224000" />
       <workItem from="1523020287899" duration="41000" />
-      <workItem from="1523027681064" duration="17127000" />
+      <workItem from="1523027681064" duration="20111000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134848000" />
+    <option name="totallyTimeSpent" value="137832000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -710,18 +713,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java</url>
-          <line>103</line>
+          <line>95</line>
           <properties />
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/product/ProductController.java</url>
-          <line>30</line>
+          <line>33</line>
           <properties />
-          <option name="timeStamp" value="59" />
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="60" />
+      <option name="time" value="66" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -732,27 +735,47 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
-        <expression-string>document.getChildNodes().item(0).getChildNodes().item(1)</expression-string>
+        <expression-string>rootNodes.item(productI).getChildNodes().item(productj)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>document.getChildNodes().item(0).getChildNodes().item(0)</expression-string>
+        <expression-string>rootNodes.item(productI)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>document.getChildNodes().item(0).getChildNodes()</expression-string>
+        <expression-string>rootNodes.item(i)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>document.getChildNodes().item(0)</expression-string>
+        <expression-string>document.getElementsByTagName(&quot;store&quot;).item(store).getChildNodes().item(3)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>document.getChildNodes().item(1)</expression-string>
+        <expression-string>document.getElementsByTagName(&quot;store&quot;).item(store).getChildNodes().item(1)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>document.getElementsByTagName(&quot;store&quot;).item(store).getChildNodes().item(2)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>document.getElementsByTagName(&quot;store&quot;).item(store).getChildNodes().item(5)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>document.getElementsByTagName(&quot;store&quot;).item(store).getChildNodes().item(4)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>document.getElementsByTagName(&quot;store&quot;).item(store).getChildNodes().item(0)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -1141,24 +1164,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="52" column="41" lean-forward="false" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/my.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/production/skproj/com/ivantk/skproj/javaFX/product/ProductController.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-231">
@@ -1167,10 +1172,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/stax/StAXServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/view/MainController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="59" column="17" lean-forward="true" selection-start-line="59" selection-start-column="17" selection-end-line="59" selection-end-column="17" />
+        <state relative-caret-position="-42">
+          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1179,11 +1184,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/javaFX/product/ProductController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="41" column="23" lean-forward="false" selection-start-line="41" selection-start-column="23" selection-end-line="41" selection-end-column="23" />
+        <state relative-caret-position="304">
+          <caret line="35" column="17" lean-forward="false" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/ivantk/skproj/stax/StAXServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2366">
+          <caret line="161" column="47" lean-forward="false" selection-start-line="161" selection-start-column="47" selection-end-line="161" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resources/my.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="33" column="18" lean-forward="false" selection-start-line="33" selection-start-column="18" selection-end-line="33" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
