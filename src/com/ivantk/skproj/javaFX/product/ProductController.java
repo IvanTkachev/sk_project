@@ -2,11 +2,9 @@ package com.ivantk.skproj.javaFX.product;
 
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.javaFX.view.MainController;
-import com.ivantk.skproj.services.ProductService;
-import com.ivantk.skproj.services.impl.ProductServiceImpl;
+import com.ivantk.skproj.stax.XMLService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,16 +12,14 @@ import javafx.stage.Stage;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NameClassPair;
 import java.rmi.RemoteException;
-import java.util.Enumeration;
 
 public class ProductController {
 
     private TableView<Product> productTableView;
     public TextField updateName;
     public TextField updateCount;
-    private ProductService productService;
+    private XMLService xmlService;
     public TextField name;
     public TextField count;
     private Stage dialogStage;
@@ -33,9 +29,9 @@ public class ProductController {
         if (isInputValid()) {
             Product product = new Product(name.getText(), Integer.parseInt(count.getText()));
             try {
-                if (productService.findProduct(product.getName(), MainController.nameStore) == null) {
-                    productService.addProduct(product, MainController.nameStore);
-                    MainController.products.add(productService.findProduct(product.getName(), MainController.nameStore));
+                if (xmlService.findProduct(product.getName(), MainController.nameStore) == null) {
+                    xmlService.addProduct(product, MainController.nameStore);
+                    MainController.products.add(xmlService.findProduct(product.getName(), MainController.nameStore));
                     dialogStage.close();
                 } else {
                     errorMessage("Product " + product.getName() + " already exist");
@@ -48,33 +44,11 @@ public class ProductController {
         }
     }
 
-    @FXML
-    public void updateProduct(ActionEvent actionEvent) {
-        Product product = productTableView.getSelectionModel().getSelectedItem();
-        if (isInputValid()) {
-            Product createdProduct = new Product(updateName.getText(), Integer.parseInt(updateCount.getText()));
-            try {
-                if ((productService.findProduct(product.getName(), MainController.nameStore) != null)) {
-                    productService.updateProduct(product, createdProduct, MainController.nameStore, MainController.nameStore);
-                    MainController.products.remove(product);
-                    MainController.products.add(productService.findProduct(createdProduct.getName(), MainController.nameStore));
-                    dialogStage.close();
-                }
-                else{
-                    errorMessage("Something wrong. Try again");
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
     public void deleteProduct(ActionEvent actionEvent) {
         Product product = productTableView.getSelectionModel().getSelectedItem();
         if (product != null) {
             try {
-                productService.deleteProduct(product.getName(), MainController.nameStore);
+                xmlService.deleteProduct(product.getName(), MainController.nameStore);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -93,15 +67,15 @@ public class ProductController {
     private void initialize() {
         try {
             Context context = new InitialContext();
-            productService = (ProductService) context.lookup("rmi://localhost/database");
+            xmlService = (XMLService) context.lookup("rmi://localhost/stax");
         }catch (Exception e){
             e.printStackTrace();
         }
-        if (updateName != null) {
-                updateName.setText(MainController.productForUpdate.getName());
-                updateCount.setText(String.valueOf(MainController.productForUpdate.getCount()));
-
-        }
+//        if (updateName != null) {
+//                updateName.setText(MainController.productForUpdate.getName());
+//                updateCount.setText(String.valueOf(MainController.productForUpdate.getCount()));
+//
+//        }
 
     }
 

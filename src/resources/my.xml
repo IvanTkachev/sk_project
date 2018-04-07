@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<stores>
+    <store id_store="1" name_store="Store1">
+        <product id_product="1">
+            <name>Product11</name>
+            <count>11</count>
+        </product>
+
+        <product id_product="2">
+            <name>Product12</name>
+            <count>12</count>
+        </product>
+
+        <product id_product="3">
+            <name>Product13</name>
+            <count>13</count>
+        </product>
+    </store>
+
+    <store id_store="2" name_store="Store2">
+        <product id_product="1">
+            <name>Product21</name>
+            <count>21</count>
+        </product>
+
+        <product id_product="2">
+            <name>Product22</name>
+            <count>22</count>
+        </product>
+
+        <product id_product="3">
+            <name>Product23</name>
+            <count>23</count>
+        </product>
+    </store>
+
+    <store id_store="3" name_store="Store3">
+        <product id_product="1">
+            <name>Product31</name>
+            <count>31</count>
+        </product>
+
+        <product id_product="2">
+            <name>Product32</name>
+            <count>32</count>
+        </product>
+
+        <product id_product="3">
+            <name>Product33</name>
+            <count>33</count>
+        </product>
+    </store>
+</stores>

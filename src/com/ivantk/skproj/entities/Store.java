@@ -6,6 +6,8 @@ public class Store implements Serializable {
     int id;
     String name;
 
+    public Store(){}
+
     public Store(int id, String name) {
         this.id = id;
         this.name = name;

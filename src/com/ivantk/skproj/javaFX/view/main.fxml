@@ -19,7 +19,6 @@
             <ContextMenu>
                 <items>
                     <MenuItem id="101" mnemonicParsing="false" onAction="#showAddDialog" text="Add product" />
-                    <MenuItem fx:id="updateItem" id="102" mnemonicParsing="false" onAction="#showUpdateDialog" text="Update product" />
                     <MenuItem fx:id="deleteItem" id="103" mnemonicParsing="false" onAction="#showDeleteDialog" text="Delete product" />
                 </items>
             </ContextMenu>
@@ -38,9 +37,6 @@
          <contextMenu>
             <ContextMenu>
                <items>
-                  <MenuItem id="101" mnemonicParsing="false" onAction="#showAddStoreDialog" text="Add store" />
-                  <MenuItem id="102" mnemonicParsing="false" onAction="#showUpdateStoreDialog" text="Update store" />
-                  <MenuItem id="103" mnemonicParsing="false" onAction="#showDeleteStoreDialog" text="Delete store" />
                   <MenuItem id="104" mnemonicParsing="false" onAction="#changeStore" text="Choose Store" />
                </items>
             </ContextMenu>
