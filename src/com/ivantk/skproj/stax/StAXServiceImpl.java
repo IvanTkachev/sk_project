@@ -3,6 +3,10 @@ package com.ivantk.skproj.stax;
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.entities.Store;
 import com.ivantk.skproj.javaFX.view.MainController;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -15,11 +19,14 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import javax.xml.transform.Source;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -58,7 +65,33 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
 
     @Override
     public void addProduct(Product product, String storeName) throws RemoteException {
+        try {
+            Document document = documentBuilder.parse(productsFile);
+            Element root = null;
+            NodeList nodes = document.getElementsByTagName("store");
+            for (int i =0; i < nodes.getLength(); i++){
+                if(storeName.equals(nodes.item(i).getAttributes().getNamedItem("name_store").getNodeValue())){
+                    root = (Element) document.getElementsByTagName("store").item(0);
+                }
+            }
+            Element xmlBook = document.createElement("product");
+            xmlBook.setAttribute("id_product", String.valueOf(product.getId()));
 
+            Element nameNode = document.createElement("name");
+            nameNode.appendChild(document.createTextNode(product.getName()));
+
+            Element countNode = document.createElement("count");
+            countNode.appendChild(document.createTextNode(String.valueOf(product.getCount())));
+
+            xmlBook.appendChild(nameNode);
+            xmlBook.appendChild(countNode);
+            root.appendChild(xmlBook);
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            transformer.transform(new DOMSource(document), new StreamResult(productsFile));
+
+        } catch (IOException | SAXException | TransformerException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -226,9 +259,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
     public static void main(String[] args) {
         try {
             StAXServiceImpl stAXService = new StAXServiceImpl();
-            Product product = null;
-            product = stAXService.findProduct("Product21", MainController.nameStore);
-           System.out.println(product);
+           stAXService.addProduct(new Product(4, "Product4", 123), MainController.nameStore);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

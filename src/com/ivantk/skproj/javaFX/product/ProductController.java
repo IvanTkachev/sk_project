@@ -27,11 +27,17 @@ public class ProductController {
     @FXML
     public void createProduct() {
         if (isInputValid()) {
-            Product product = new Product(name.getText(), Integer.parseInt(count.getText()));
+
+            int id = 0;
+            for(int i = 0; i < MainController.products.size(); i++){
+                if(MainController.products.get(i).getId() > id)
+                    id = MainController.products.get(i).getCount();
+            }
+            Product product = new Product(id, name.getText(), Integer.parseInt(count.getText()));
             try {
                 if (xmlService.findProduct(product.getName(), MainController.nameStore) == null) {
                     xmlService.addProduct(product, MainController.nameStore);
-                    MainController.products.add(xmlService.findProduct(product.getName(), MainController.nameStore));
+                    MainController.products.add(product);
                     dialogStage.close();
                 } else {
                     errorMessage("Product " + product.getName() + " already exist");
