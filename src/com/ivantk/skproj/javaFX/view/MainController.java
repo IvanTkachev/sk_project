@@ -38,7 +38,7 @@ public class MainController {
 
     private XMLService xmlService;
 
-    public static String nameStore = "RootStore";
+    public static String nameStore = "Store1";
 //    public static Product productForUpdate;
 
 
@@ -125,7 +125,7 @@ public class MainController {
 
 
 
-//            products.addAll(xmlService.getAllProducts(nameStore));
+            products.addAll(xmlService.getAllProducts(nameStore));
 //            productTableView.setEditable(true);
             stores.addAll(xmlService.getAllStores());
 
@@ -138,7 +138,7 @@ public class MainController {
             storeColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
             // заполняем таблицу данными
-//            productTableView.setItems(products);
+            productTableView.setItems(products);
             storeTableView.setItems(stores);
             storeLabel.setText("Current store: " + nameStore);
         }catch (Exception e){
