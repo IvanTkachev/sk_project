@@ -12,6 +12,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Class that implements {@link StoreDao} interface.
+ * Use {@link DAO} that provide connections logic.
+ * Provide operations with {@link Store}.
+ *
+ * @author Ivan Tkachev
+ */
 public class StoreDaoImpl extends DAO implements StoreDao {
 
     @Override
@@ -150,13 +158,4 @@ public class StoreDaoImpl extends DAO implements StoreDao {
             poolInst.footConnection(connection);
         }
     }
-
-    public static void main(String[] args) throws ClassNotFoundException {
-
-        ProductDaoImpl productDao = new ProductDaoImpl();
-        StoreDaoImpl storeDao = new StoreDaoImpl();
-
-        storeDao.checkStoreName("Store4");
-    }
-
 }

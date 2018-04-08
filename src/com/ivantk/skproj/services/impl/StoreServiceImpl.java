@@ -11,6 +11,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+/**
+ * Implementation of {@link StoreService} interface.
+ *
+ * @author Ivan Tkachev
+ */
 public class StoreServiceImpl extends UnicastRemoteObject implements StoreService {
 
     private static final String ANSI_RESET = "\u001B[0m";

@@ -13,6 +13,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that implements {@link ProductDao} interface.
+ * Use {@link DAO} that provide connections logic.
+ * Provide operations with {@link Product}.
+ *
+ * @author Ivan Tkachev
+ */
 public class ProductDaoImpl extends DAO implements ProductDao {
 
     @Override

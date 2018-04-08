@@ -6,6 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ *  Method that run client part which connects to the server based on rmi and fill data from database.
+ *
+ *  @author Ivan Tkachev
+ */
 public class MainFX extends Application {
 
     public static Stage rootStage;

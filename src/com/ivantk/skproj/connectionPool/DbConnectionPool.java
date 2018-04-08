@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 
 /**
  * The class that creates the connection to the database
+ *
+ * @author Ivan Tkachev
  */
 public class DbConnectionPool {
 
@@ -23,8 +25,11 @@ public class DbConnectionPool {
 
     private Deque<Connection> connections;
 
+    /**
+     * This constructs a dbConnectionPool that specified url, username and password to connect.
+     *
+     */
     private DbConnectionPool() {
-
         ResourceBundle resourceBundle = ResourceBundle.getBundle("database");
         url = resourceBundle.getString("jdbc.url");
         user = resourceBundle.getString("jdbc.username");
@@ -35,6 +40,8 @@ public class DbConnectionPool {
 
     /**
      * Function that returns a DbConnectionPool#connection
+     *
+     * @return {@link Connection}
      */
     public synchronized Connection getConnection() {
         if (!connections.isEmpty()) {
@@ -53,6 +60,8 @@ public class DbConnectionPool {
 
     /**
      * Function that close a DbConnectionPool#connection
+     *
+     * @param connection connection that be closed
      */
     public void footConnection(Connection connection) {
         try {
@@ -64,6 +73,11 @@ public class DbConnectionPool {
         }
     }
 
+    /**
+     * Function that get instance of {@link DbConnectionPool}
+     *
+     * @return {@link DbConnectionPool} instance of dbConnectionPool
+     */
     public static DbConnectionPool getInstance() {
         if (instance == null) {
             synchronized (DbConnectionPool.class) {

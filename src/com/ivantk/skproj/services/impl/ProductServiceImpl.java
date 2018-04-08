@@ -11,6 +11,11 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+/**
+ * Implementation of {@link ProductService} interface.
+ *
+ * @author Ivan Tkachev
+ */
 public class ProductServiceImpl extends UnicastRemoteObject implements ProductService {
     private ProductDao productDao = new ProductDaoImpl();
     private StoreDao storeDao = new StoreDaoImpl();
@@ -47,12 +52,12 @@ public class ProductServiceImpl extends UnicastRemoteObject implements ProductSe
         if (productDao.findProduct(oldProduct.getName(), storeDao.getStoreIdByStoreName(oldStoreName)) != null &&
                 (productDao.findProduct(newProduct.getName(), storeDao.getStoreIdByStoreName(oldStoreName)) == null
                         || newProduct.getName().equals(oldProduct.getName()))) {
-            //
+
             storeDao.checkStoreName(newStoreName);
             productDao.updateProduct(oldProduct, newProduct, storeDao.getStoreIdByStoreName(oldStoreName),
                     storeDao.getStoreIdByStoreName(newStoreName));
             System.out.println(ANSI_GREEN + "Product " + newProduct.getName() + " updated." + ANSI_RESET);
-            //
+
         } else System.out.println(ANSI_RED + "There is no " + oldProduct.getName() + " in " + oldStoreName + " \n" +
                 "of " + newProduct.getName() + " already exist" + ANSI_RESET);
     }

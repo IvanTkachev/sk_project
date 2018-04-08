@@ -24,30 +24,75 @@ import javax.naming.InitialContext;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ *  Class that processes requests coming from the javafx interface.
+ *
+ *  @author Ivan Tkachev
+ */
 public class MainController {
 
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableColumn.html">TableColumn</a> of product's id
+     */
     public TableColumn<Product, Integer> idColumn;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableColumn.html">TableColumn</a> of product's name
+     */
     public TableColumn<Product, String> nameColumn;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableColumn.html">TableColumn</a> of product's count
+     */
     public TableColumn<Product, Integer> countColumn;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html">TableView</a> of products
+     */
     public TableView<Product> productTableView;
+    /**
+     * list of products
+     */
     public static ObservableList<Product> products = FXCollections.observableArrayList();
-
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html">TableView</a> of stores
+     */
     public TableView<Store> storeTableView;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableColumn.html">TableColumn</a> of store's name
+     */
     public TableColumn<Store, String> storeColumn;
+    /**
+     * list of stores
+     */
     public static ObservableList<Store> stores = FXCollections.observableArrayList();
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">label</a> of current store
+     */
     public Label storeLabel;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">item</a> for delete product
+     */
     public MenuItem deleteItem;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">item</a> for update v
+     */
     public MenuItem updateItem;
 
     private ProductService productService;
     private StoreService storeService;
 
+    /**
+     * current store
+     */
     public static String nameStore = "RootStore";
+    /**
+     * product for update
+     */
     public static Product productForUpdate;
 
 
-    //PRODUCT ACTIONS
-    public void showAddDialog(ActionEvent actionEvent) {
+    /**
+     *  Method that show <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html">dialog</a> after user click on add product in context menu.
+     */
+    public void showAddDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainFX.class.getResource("newProduct.fxml"));
@@ -69,7 +114,10 @@ public class MainController {
         }
     }
 
-    public void showUpdateDialog(ActionEvent actionEvent) {
+    /**
+     *  Method that show <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html">dialog</a> after user click on update product in context menu.
+     */
+    public void showUpdateDialog() {
         productForUpdate = productTableView.getSelectionModel().getSelectedItem();
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -93,7 +141,10 @@ public class MainController {
         }
     }
 
-    public void showDeleteDialog(ActionEvent actionEvent) {
+    /**
+     *  Method that show <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html">dialog</a> after user click on delete product in context menu.
+     */
+    public void showDeleteDialog() {
         productForUpdate = productTableView.getSelectionModel().getSelectedItem();
         if(productForUpdate == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -124,8 +175,10 @@ public class MainController {
     }
 
 
-    //STORE ACTIONS
-    public void showAddStoreDialog(ActionEvent actionEvent) {
+    /**
+     *  Method that show <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html">dialog</a> after user click on add store in context menu.
+     */
+    public void showAddStoreDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainFX.class.getResource("newStore.fxml"));
@@ -145,7 +198,10 @@ public class MainController {
         }
     }
 
-    public void showUpdateStoreDialog(ActionEvent actionEvent) {
+    /**
+     *  Method that show <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html">dialog</a> after user click on update store in context menu.
+     */
+    public void showUpdateStoreDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainFX.class.getResource("updateStore.fxml"));
@@ -168,7 +224,10 @@ public class MainController {
         }
     }
 
-    public void showDeleteStoreDialog(ActionEvent actionEvent) {
+    /**
+     *  Method that show <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html">dialog</a> after user click on delete product in context menu.
+     */
+    public void showDeleteStoreDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainFX.class.getResource("deleteStoreDialog.fxml"));
@@ -195,7 +254,10 @@ public class MainController {
         }
     }
 
-    public void changeStore(ActionEvent actionEvent) {
+    /**
+     *  Method that change store after user click on choose store in context menu.
+     */
+    public void changeStore() {
         Store store = storeTableView.getSelectionModel().getSelectedItem();
         if(store != null){
             nameStore = store.getName();
@@ -228,13 +290,11 @@ public class MainController {
             updateItem.disableProperty().bind(Bindings.isEmpty(productTableView.getSelectionModel().getSelectedItems()));
             deleteItem.disableProperty().bind(Bindings.isEmpty(productTableView.getSelectionModel().getSelectedItems()));
 
-            // устанавливаем тип и значение которое должно хранится в колонке
             idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
             storeColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-            // заполняем таблицу данными
             productTableView.setItems(products);
             storeTableView.setItems(stores);
             storeLabel.setText("Current store: " + nameStore);

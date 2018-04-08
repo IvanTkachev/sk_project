@@ -6,6 +6,11 @@ import com.ivantk.skproj.services.impl.StoreServiceImpl;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
+/**
+ * Class that realise server which works on the basis of rmi.
+ *
+ * @author Ivan Tkachev
+ */
 public class Server {
     public static void main(String[] args) throws Exception {
         java.rmi.registry.LocateRegistry.createRegistry(1099);

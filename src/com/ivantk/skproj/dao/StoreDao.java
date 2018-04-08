@@ -4,25 +4,25 @@ import com.ivantk.skproj.entities.Store;
 
 import java.util.List;
 
+/**
+ * Basic Data Access Object interface.
+ * Provide operations with {@link Store}.
+ *
+ * @author Ivan Tkachev
+ */
 public interface StoreDao {
-    //Done
+
     List<Store> getAllStores();
 
-    //Done
     void addStore(String name);
 
-    //Done
     Store findStore(String name);
 
-    //Done
     void deleteStore(String name);
 
-    //Done
     void updateStore(String oldStore, String newStore);
 
-    //Done
     int getStoreIdByStoreName(String storeName);
 
-    //Done
     void checkStoreName(String storeName);
 }

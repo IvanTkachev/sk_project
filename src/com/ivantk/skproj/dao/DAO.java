@@ -6,6 +6,8 @@ import com.ivantk.skproj.services.SqlService;
 
 /**
  * The class that initializes {@link DbConnectionPool} and {@link SqlService}
+ *
+ * @author Ivan Tkachev
  */
 public abstract class DAO {
 

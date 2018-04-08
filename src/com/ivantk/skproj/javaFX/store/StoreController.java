@@ -14,10 +14,25 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import java.rmi.RemoteException;
 
+/**
+ *  Class that processes requests from <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html">TableView</a> of {@link Store}'s coming from the javafx interface.
+ *
+ *  @author Ivan Tkachev
+ */
 public class StoreController {
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html">TableView</a> of stores
+     */
     private TableView<Store> storeTableView;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TextField.html">TextField</a> for store
+     */
     public TextField storeField;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TextField.html">TextField</a> for store name
+     */
     public TextField name;
+
     private StoreService storeService;
     private Stage dialogStage;
 
@@ -31,7 +46,10 @@ public class StoreController {
         }
     }
 
-    public void createStore(ActionEvent actionEvent) {
+    /**
+     *  Method that add {@link Store} to database using data that the user entered into the form: name.
+     */
+    public void createStore() {
         if(name.getText() != null){
             try {
                 if(storeService.findStore(name.getText()) == null){
@@ -48,7 +66,10 @@ public class StoreController {
         else errorMessage("Incorrect data. Try again");
     }
 
-    public void deleteStore(ActionEvent actionEvent) {
+    /**
+     *  Method that delete {@link Store} from database the client has selected.
+     */
+    public void deleteStore() {
         Store store = storeTableView.getSelectionModel().getSelectedItem();
         if (store != null && !"RootStore".equals(store.getName())) {
             try {
@@ -64,7 +85,10 @@ public class StoreController {
         }
     }
 
-    public void updateStore(ActionEvent actionEvent) {
+    /**
+     *  Method that update {@link Store} from database using data that the user entered into the form: name.
+     */
+    public void updateStore() {
         Store store = storeTableView.getSelectionModel().getSelectedItem();
         if(store != null && storeField.getText() != null && !"RootStore".equals(storeField.getText())){
             try {

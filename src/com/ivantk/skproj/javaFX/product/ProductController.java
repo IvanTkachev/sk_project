@@ -3,10 +3,8 @@ package com.ivantk.skproj.javaFX.product;
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.javaFX.view.MainController;
 import com.ivantk.skproj.services.ProductService;
-import com.ivantk.skproj.services.impl.ProductServiceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,20 +12,41 @@ import javafx.stage.Stage;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NameClassPair;
 import java.rmi.RemoteException;
-import java.util.Enumeration;
 
+/**
+ *  Class that processes requests from <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html">TableView</a> of {@link Product}'s coming from the javafx interface.
+ *
+ *  @author Ivan Tkachev
+ */
 public class ProductController {
-
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html">TableView</a> of products
+     */
     private TableView<Product> productTableView;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TextField.html">TextField</a> for update product name
+     */
     public TextField updateName;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TextField.html">TextField</a> for update product count
+     */
     public TextField updateCount;
-    private ProductService productService;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TextField.html">TextField</a> for product name
+     */
     public TextField name;
+    /**
+     * <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TextField.html">TextField</a> for product count
+     */
     public TextField count;
-    private Stage dialogStage;
 
+    private Stage dialogStage;
+    private ProductService productService;
+
+    /**
+     *  Method that add {@link Product} to database using data that the user entered into the form: name and count.
+     */
     @FXML
     public void createProduct() {
         if (isInputValid()) {
@@ -48,8 +67,11 @@ public class ProductController {
         }
     }
 
+    /**
+     *  Method that update {@link Product} from database using data that the user entered into the form: name and count.
+     */
     @FXML
-    public void updateProduct(ActionEvent actionEvent) {
+    public void updateProduct() {
         Product product = productTableView.getSelectionModel().getSelectedItem();
         if (isInputValid()) {
             Product createdProduct = new Product(updateName.getText(), Integer.parseInt(updateCount.getText()));
@@ -70,7 +92,10 @@ public class ProductController {
         }
     }
 
-    public void deleteProduct(ActionEvent actionEvent) {
+    /**
+     *  Method that delete {@link Product} from database the client has selected.
+     */
+    public void deleteProduct() {
         Product product = productTableView.getSelectionModel().getSelectedItem();
         if (product != null) {
             try {
@@ -85,7 +110,7 @@ public class ProductController {
         }
     }
 
-    public void cancelAction(ActionEvent actionEvent) {
+    public void cancelAction() {
         dialogStage.close();
     }
 
@@ -130,7 +155,6 @@ public class ProductController {
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            // Показываем сообщение об ошибке.
             errorMessage(errorMessage);
             return false;
         }

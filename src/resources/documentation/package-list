@@ -1,0 +1,10 @@
+com.ivantk.skproj.connectionPool
+com.ivantk.skproj.dao
+com.ivantk.skproj.dao.impl
+com.ivantk.skproj.entities
+com.ivantk.skproj.javaFX.product
+com.ivantk.skproj.javaFX.store
+com.ivantk.skproj.javaFX.view
+com.ivantk.skproj.rmi
+com.ivantk.skproj.services
+com.ivantk.skproj.services.impl
