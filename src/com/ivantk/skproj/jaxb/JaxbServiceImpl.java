@@ -14,17 +14,9 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -35,8 +27,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -151,59 +141,27 @@ public class JaxbServiceImpl extends UnicastRemoteObject implements XMLService {
 
     @Override
     public Product findProduct(String productName, String storeName) throws RemoteException {
-        Product product = null;
-        String currentStore = null;
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        Stores stores = new Stores();
         try {
-            // инициализируем reader и скармливаем ему xml файл
-            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(productsFile));
-            // проходим по всем элементам xml файла
-            while (reader.hasNext()) {
-                // получаем событие (элемент) и разбираем его по атрибутам
-                XMLEvent xmlEvent = reader.nextEvent();
-                if (xmlEvent.isStartElement()) {
-                    StartElement startElement = xmlEvent.asStartElement();
-                    Attribute nameStore = startElement.getAttributeByName(new QName("name_store"));
-                    if(nameStore != null){
-                        currentStore = nameStore.getValue();
-                    }
-                    if(storeName.equals(currentStore)){
-                        switch (startElement.getName().getLocalPart()) {
-                            case "product":
-                                product = new Product();
-                                // Получаем атрибут id для каждого элемента Student
-                                Attribute idProduct = startElement.getAttributeByName(new QName("id_product"));
-                                if (idProduct != null) {
-                                    product.setId(Integer.parseInt(idProduct.getValue()));
-                                }
-                                break;
-                            case "name":
-                                xmlEvent = reader.nextEvent();
-                                product.setName(String.valueOf(xmlEvent.asCharacters().getData()));
-                                break;
-                            case "count":
-                                xmlEvent = reader.nextEvent();
-                                product.setCount(Integer.parseInt(xmlEvent.asCharacters().getData()));
-                                break;
-                        }
-                    }
-
-                }
-                // если цикл дошел до закрывающего элемента Student,
-                // то добавляем считанного из файла студента в список
-                if (xmlEvent.isEndElement()) {
-                    EndElement endElement = xmlEvent.asEndElement();
-                    if (endElement.getName().getLocalPart().equals("product") && storeName.equals(currentStore)
-                            && product != null && productName.equals(product.getName())) {
-                        return product;
-                    }
-                }
-            }
-
-        } catch (FileNotFoundException | XMLStreamException exc) {
-            exc.printStackTrace();
+            context = JAXBContext.newInstance(Stores.class);
+            unmarshaller = context.createUnmarshaller();
+            stores = (Stores) unmarshaller.unmarshal(productsFile);
+        } catch (JAXBException e) {
+            e.printStackTrace();
         }
-        return null;
+        Stores.Store currentStore = null;
+        for (Stores.Store store : new ArrayList<>(stores.getStore())) {
+            if (store.getNameStore().equals(storeName))
+                currentStore = store;
+        }
+        Product resultProduct = null;
+        for (Stores.Store.Product product : currentStore.getProduct()) {
+            if(productName.equals(((ElementNSImpl) product.getName()).getFirstChild().getNodeValue())){
+                resultProduct = new Product(product.getIdProduct(), ((ElementNSImpl) product.getName()).getFirstChild().getNodeValue(),
+                        Integer.parseInt(((ElementNSImpl) product.getCount()).getFirstChild().getNodeValue()));
+            }
+        }
+        return resultProduct;
     }
 
     @Override
@@ -227,11 +185,8 @@ public class JaxbServiceImpl extends UnicastRemoteObject implements XMLService {
     public static void main(String[] args) {
         try {
             JaxbServiceImpl service = new JaxbServiceImpl();
-            List<Product> list = service.getAllProducts(MainController.nameStore);
-            for (Product store: list) {
-                System.out.println(store.getId());
-                System.out.println(store.getName());
-            }
+            Product product = service.findProduct("Product1", MainController.nameStore);
+         System.out.println(product);
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
