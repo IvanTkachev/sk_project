@@ -3,6 +3,8 @@ package com.ivantk.skproj.jaxb;
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.entities.Store;
 import com.ivantk.skproj.entities.Stores;
+import com.ivantk.skproj.javaFX.view.MainController;
+import com.sun.org.apache.xerces.internal.dom.ElementNSImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -95,18 +97,25 @@ public class JaxbServiceImpl extends UnicastRemoteObject implements XMLService {
 
     @Override
     public List<Product> getAllProducts(String storeName) throws RemoteException {
-//        Stores stores = new Stores();
-//        try {
-//            context = JAXBContext.newInstance(Stores.class);
-//            unmarshaller = context.createUnmarshaller();
-//            stores = (Stores) unmarshaller.unmarshal(productsFile);
-//        } catch (JAXBException e) {
-//            System.out.println(e.getMessage());
-//            e.printStackTrace();
-//        }
-//        System.out.println(stores.getStore());
-//        return new ArrayList<Stores.Store>(stores.getStore());
-        return null;
+        Stores stores = new Stores();
+        try {
+            context = JAXBContext.newInstance(Stores.class);
+            unmarshaller = context.createUnmarshaller();
+            stores = (Stores) unmarshaller.unmarshal(productsFile);
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        Stores.Store currentStore = null;
+        for (Stores.Store store : new ArrayList<>(stores.getStore())) {
+            if (store.getNameStore().equals(storeName))
+                currentStore = store;
+        }
+        List<Product> products = new ArrayList<>();
+        for (Stores.Store.Product product : currentStore.getProduct()) {
+            products.add(new Product(product.getIdProduct(), ((ElementNSImpl) product.getName()).getFirstChild().getNodeValue(),
+                    Integer.parseInt(((ElementNSImpl) product.getCount()).getFirstChild().getNodeValue())));
+        }
+        return products;
     }
 
 
@@ -218,8 +227,8 @@ public class JaxbServiceImpl extends UnicastRemoteObject implements XMLService {
     public static void main(String[] args) {
         try {
             JaxbServiceImpl service = new JaxbServiceImpl();
-            List<Store> list = service.getAllStores();
-            for (Store store: list) {
+            List<Product> list = service.getAllProducts(MainController.nameStore);
+            for (Product store: list) {
                 System.out.println(store.getId());
                 System.out.println(store.getName());
             }
