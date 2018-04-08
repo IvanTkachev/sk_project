@@ -3,8 +3,8 @@ package com.ivantk.skproj.entities;
 import java.io.Serializable;
 
 public class Store implements Serializable {
-    int id;
-    String name;
+    private int id;
+    private String name;
 
     public Store(){}
 

@@ -5,31 +5,36 @@ import com.ivantk.skproj.entities.Store;
 import com.ivantk.skproj.javaFX.view.MainController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.*;
+import javax.xml.stream.XMLEventReader;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
-import javax.xml.transform.*;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -39,13 +44,18 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
 
     private DocumentBuilder documentBuilder;
 
-    public StAXServiceImpl() throws RemoteException {
-        try {
+    public StAXServiceImpl() throws ParserConfigurationException, SAXException, IOException {
+        super();
+            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            URL url = Class.class.getResource(schemaLocation);
+            Schema schema = factory.newSchema(url);
+
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilderFactory.setSchema(schema);
+            Validator validator = schema.newValidator();
+            Source source = new StreamSource(productsFile);
+            validator.validate(source);
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -59,8 +69,8 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
                     root = (Element) document.getElementsByTagName("store").item(i);
                 }
             }
-            Element xmlBook = document.createElement("product");
-            xmlBook.setAttribute("id_product", String.valueOf(product.getId()));
+            Element productXML = document.createElement("product");
+            productXML.setAttribute("id_product", String.valueOf(product.getId()));
 
             Element nameNode = document.createElement("name");
             nameNode.appendChild(document.createTextNode(product.getName()));
@@ -68,9 +78,9 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
             Element countNode = document.createElement("count");
             countNode.appendChild(document.createTextNode(String.valueOf(product.getCount())));
 
-            xmlBook.appendChild(nameNode);
-            xmlBook.appendChild(countNode);
-            root.appendChild(xmlBook);
+            productXML.appendChild(nameNode);
+            productXML.appendChild(countNode);
+            root.appendChild(productXML);
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(new DOMSource(document), new StreamResult(productsFile));
 
@@ -102,7 +112,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
                         switch (startElement.getName().getLocalPart()) {
                             case "product":
                                 product = new Product();
-                                // Получаем атрибут id для каждого элемента Student
+                                // Получаем атрибут id для каждого элемента Product
                                 Attribute idProduct = startElement.getAttributeByName(new QName("id_product"));
                                 if (idProduct != null) {
                                     product.setId(Integer.parseInt(idProduct.getValue()));
@@ -119,7 +129,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
                         }
                     }
                 }
-                // если цикл дошел до закрывающего элемента Student,
+                // если цикл дошел до закрывающего элемента Product,
                 // то добавляем считанного из файла студента в список
                 if (xmlEvent.isEndElement()) {
                     EndElement endElement = xmlEvent.asEndElement();
@@ -148,7 +158,6 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
                 }
             }
             NodeList rootNodes = root.getElementsByTagName("product");
-            Element rootProduct = null;
             for (int i =0; i < rootNodes.getLength(); i++){
                 NodeList childes = rootNodes.item(i).getChildNodes();
                 for (int j =0; j < childes.getLength(); j++){
@@ -267,13 +276,13 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
         return stores;
     }
 
-    public static void main(String[] args) {
-        try {
-            StAXServiceImpl stAXService = new StAXServiceImpl();
-           stAXService.deleteProduct("Product12", MainController.nameStore);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    public static void main(String[] args) {
+//        try {
+//            StAXServiceImpl stAXService = new StAXServiceImpl();
+//           stAXService.deleteProduct("Product12", MainController.nameStore);
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }

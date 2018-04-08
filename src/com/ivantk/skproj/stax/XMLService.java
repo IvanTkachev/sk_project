@@ -10,7 +10,8 @@ import java.util.List;
 
 public interface XMLService extends Remote {
 
-    File productsFile = new File("src/resources/my.xml");
+    File productsFile = new File("src/resources/products.xml");
+    String schemaLocation = "/products.xsd";
 
     void addProduct(Product product, String storeName) throws RemoteException;
 

@@ -11,10 +11,6 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String name, int count) {
-        this.name = name;
-        this.count = count;
-    }
 
     public Product(int id, String name, int count) {
         this.id = id;

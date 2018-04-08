@@ -115,10 +115,7 @@ public class MainController {
             Context context = new InitialContext();
             xmlService = (XMLService) context.lookup("rmi://localhost/stax");
 
-
-
             products.addAll(xmlService.getAllProducts(nameStore));
-//            productTableView.setEditable(true);
             stores.addAll(xmlService.getAllStores());
 
             deleteItem.disableProperty().bind(Bindings.isEmpty(productTableView.getSelectionModel().getSelectedItems()));
