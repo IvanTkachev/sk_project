@@ -1,4 +1,4 @@
-package com.ivantk.skproj.stax;
+package com.ivantk.skproj.jaxb;
 
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.entities.Store;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface XMLService extends Remote {
 
     File productsFile = new File("src/resources/products.xml");
-    String schemaLocation = "/products.xsd";
+    String schemaLocation = "/resources/products.xsd";
 
     void addProduct(Product product, String storeName) throws RemoteException;
 

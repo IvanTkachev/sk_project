@@ -2,7 +2,7 @@ package com.ivantk.skproj.javaFX.product;
 
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.javaFX.view.MainController;
-import com.ivantk.skproj.stax.XMLService;
+import com.ivantk.skproj.jaxb.XMLService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

@@ -3,7 +3,7 @@ package com.ivantk.skproj.javaFX.view;
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.entities.Store;
 import com.ivantk.skproj.javaFX.product.ProductController;
-import com.ivantk.skproj.stax.XMLService;
+import com.ivantk.skproj.jaxb.XMLService;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

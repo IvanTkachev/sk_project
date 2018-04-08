@@ -1,15 +1,17 @@
-package com.ivantk.skproj.stax;
+package com.ivantk.skproj.jaxb;
 
 import com.ivantk.skproj.entities.Product;
 import com.ivantk.skproj.entities.Store;
-import com.ivantk.skproj.javaFX.view.MainController;
+import com.ivantk.skproj.entities.Stores;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,22 +42,24 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
+public class JaxbServiceImpl extends UnicastRemoteObject implements XMLService {
 
+    private JAXBContext context;
+    private Unmarshaller unmarshaller;
     private DocumentBuilder documentBuilder;
 
-    public StAXServiceImpl() throws ParserConfigurationException, SAXException, IOException {
+    public JaxbServiceImpl() throws ParserConfigurationException, SAXException, IOException  {
         super();
-            SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            URL url = Class.class.getResource(schemaLocation);
-            Schema schema = factory.newSchema(url);
+        SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        URL url = Class.class.getResource(schemaLocation);
+        Schema schema = factory.newSchema(url);
 
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setSchema(schema);
-            Validator validator = schema.newValidator();
-            Source source = new StreamSource(productsFile);
-            validator.validate(source);
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setSchema(schema);
+        Validator validator = schema.newValidator();
+        Source source = new StreamSource(productsFile);
+        validator.validate(source);
+        documentBuilder = documentBuilderFactory.newDocumentBuilder();
     }
 
     @Override
@@ -91,58 +95,18 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
 
     @Override
     public List<Product> getAllProducts(String storeName) throws RemoteException {
-        List<Product> products = new ArrayList<>();
-        String currentStore = null;
-        Product product = null;
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
-        try {
-            // инициализируем reader и скармливаем ему xml файл
-            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(productsFile));
-            // проходим по всем элементам xml файла
-            while (reader.hasNext()) {
-                // получаем событие (элемент) и разбираем его по атрибутам
-                XMLEvent xmlEvent = reader.nextEvent();
-                if (xmlEvent.isStartElement()) {
-                    StartElement startElement = xmlEvent.asStartElement();
-                    Attribute nameStore = startElement.getAttributeByName(new QName("name_store"));
-                    if(nameStore != null){
-                        currentStore = nameStore.getValue();
-                    }
-                    if(storeName.equals(currentStore)){
-                        switch (startElement.getName().getLocalPart()) {
-                            case "product":
-                                product = new Product();
-                                // Получаем атрибут id для каждого элемента Product
-                                Attribute idProduct = startElement.getAttributeByName(new QName("id_product"));
-                                if (idProduct != null) {
-                                    product.setId(Integer.parseInt(idProduct.getValue()));
-                                }
-                                break;
-                            case "name":
-                                xmlEvent = reader.nextEvent();
-                                product.setName(String.valueOf(xmlEvent.asCharacters().getData()));
-                                break;
-                            case "count":
-                                xmlEvent = reader.nextEvent();
-                                product.setCount(Integer.parseInt(xmlEvent.asCharacters().getData()));
-                                break;
-                        }
-                    }
-                }
-                // если цикл дошел до закрывающего элемента Product,
-                // то добавляем считанного из файла студента в список
-                if (xmlEvent.isEndElement()) {
-                    EndElement endElement = xmlEvent.asEndElement();
-                    if (endElement.getName().getLocalPart().equals("product") && storeName.equals(currentStore)) {
-                        products.add(product);
-                    }
-                }
-            }
-
-        } catch (FileNotFoundException | XMLStreamException exc) {
-            exc.printStackTrace();
-        }
-        return products;
+//        Stores stores = new Stores();
+//        try {
+//            context = JAXBContext.newInstance(Stores.class);
+//            unmarshaller = context.createUnmarshaller();
+//            stores = (Stores) unmarshaller.unmarshal(productsFile);
+//        } catch (JAXBException e) {
+//            System.out.println(e.getMessage());
+//            e.printStackTrace();
+//        }
+//        System.out.println(stores.getStore());
+//        return new ArrayList<Stores.Store>(stores.getStore());
+        return null;
     }
 
 
@@ -162,7 +126,7 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
                 NodeList childes = rootNodes.item(i).getChildNodes();
                 for (int j =0; j < childes.getLength(); j++){
                     if(childes.item(j).getFirstChild() != null
-                    && productName.equals(childes.item(j).getFirstChild().getNodeValue())){
+                            && productName.equals(childes.item(j).getFirstChild().getNodeValue())){
                         root.removeChild(rootNodes.item(i));
                     }
                 }
@@ -235,54 +199,33 @@ public class StAXServiceImpl extends UnicastRemoteObject implements XMLService {
 
     @Override
     public List<Store> getAllStores() throws RemoteException {
-        List<Store> stores = new ArrayList<>();
-        Store store = null;
-        XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+        Stores stores = new Stores();
         try {
-            // инициализируем reader и скармливаем ему xml файл
-            XMLEventReader reader = xmlInputFactory.createXMLEventReader(new FileInputStream(productsFile));
-            // проходим по всем элементам xml файла
-            while (reader.hasNext()) {
-                // получаем событие (элемент) и разбираем его по атрибутам
-                XMLEvent xmlEvent = reader.nextEvent();
-                if (xmlEvent.isStartElement()) {
-                    StartElement startElement = xmlEvent.asStartElement();
-                    if (startElement.getName().getLocalPart().equals("store")) {
-                        store = new Store();
-                        // Получаем атрибут id для каждого элемента Student
-                        Attribute idStore = startElement.getAttributeByName(new QName("id_store"));
-                        Attribute nameStore = startElement.getAttributeByName(new QName("name_store"));
-                        if (idStore != null) {
-                            store.setId(Integer.parseInt(idStore.getValue()));
-                        }
-                        if(nameStore != null){
-                            store.setName(String.valueOf(nameStore.getValue()));
-                        }
-                    }
-                }
-                // если цикл дошел до закрывающего элемента Student,
-                // то добавляем считанного из файла студента в список
-                if (xmlEvent.isEndElement()) {
-                    EndElement endElement = xmlEvent.asEndElement();
-                    if (endElement.getName().getLocalPart().equals("store")) {
-                        stores.add(store);
-                    }
-                }
-            }
-
-        } catch (FileNotFoundException | XMLStreamException exc) {
-            exc.printStackTrace();
+            context = JAXBContext.newInstance(Stores.class);
+            unmarshaller = context.createUnmarshaller();
+            stores = (Stores) unmarshaller.unmarshal(productsFile);
+        } catch (JAXBException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
-        return stores;
+        List<Store> resultList = new ArrayList<>();
+        for (Stores.Store store : new ArrayList<>(stores.getStore())){
+            resultList.add(new Store(store.getIdStore(), store.getNameStore()));
+        }
+        return resultList;
     }
 
-//    public static void main(String[] args) {
-//        try {
-//            StAXServiceImpl stAXService = new StAXServiceImpl();
-//           stAXService.deleteProduct("Product12", MainController.nameStore);
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    public static void main(String[] args) {
+        try {
+            JaxbServiceImpl service = new JaxbServiceImpl();
+            List<Store> list = service.getAllStores();
+            for (Store store: list) {
+                System.out.println(store.getId());
+                System.out.println(store.getName());
+            }
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
