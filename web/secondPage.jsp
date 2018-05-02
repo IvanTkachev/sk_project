@@ -18,6 +18,15 @@
 
             <div class="col-lg-6 description-of-the-product">
                 <div style="margin-top: 3%">
+                    <%
+                        String user = request.getSession().getAttribute("name").toString();
+
+                        if(user == null || "".equals(user)){
+                            throw new ServletException("Mandatory Parameter missing");
+                        }
+
+                    %>
+
                     <form action="second" method="get">
 
                         <div class="col-md-6" style="width: 80%">

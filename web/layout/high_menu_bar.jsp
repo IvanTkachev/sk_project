@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ taglib prefix="header-info" uri="http://www.ivantk_skproject.com/info"%>
 <html>
 <head>
     <title>Title</title>

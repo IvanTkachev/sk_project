@@ -21,6 +21,7 @@
 
         <div class="col-lg-6 description-of-the-product">
           <div style="margin-top: 3%">
+            <header-info:text headerSize="1">Hello :)</header-info:text>
             <form action="index" method="get">
 
               <div class="col-md-6" style="width: 80%">
